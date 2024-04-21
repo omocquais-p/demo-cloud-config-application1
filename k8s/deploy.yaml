@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: demo-config-client
+  name: demo-config-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-config-client
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: demo-config-client
+    spec:
+      containers:
+      - image: demo-cloud-config-application1:0.0.1-SNAPSHOT
+        name: demo-cloud-config-application1
+        resources: {}
+        env:
+          - name: SPRING_PROFILES_ACTIVE
+            value: int
+          - name: SPRING_CONFIG_IMPORT
+            value: optional:configserver:http://demo-config-server:8888
+
